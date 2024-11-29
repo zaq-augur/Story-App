@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">story app</string>
+    <string name="desc_daftar">Daftar terlebih dahulu ya!</string>
+    <string name="nama">Username</string>
+    <string name="email">Email</string>
+    <string name="password" />
+    <string name="passsword">Password\n</string>
+    <string name="btn_daftar">Daftar</string>
+    <string name="desc_login">Login dulu ya!</string>
+    <string name="btn_login">Login</string>
+    <string name="daftar">Daftar</string>
+    <string name="title_daftar">belum punya akun?</string>
+    <string name="detail_content">Detail Content</string>
+    <string name="judul">Judul</string>
+    <string name="upload">Upload</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="add_photo_preview">preview</string>
+    <string name="zaqbook">ZaqBook</string>
+</resources>
