@@ -2,7 +2,7 @@ package com.zaqly.storyapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zaqly.storyapp.data.remote.repository.AuthRepository
+import com.zaqly.storyapp.network.repository.AuthRepository
 import com.zaqly.storyapp.network.response.LoginResponse
 import com.zaqly.storyapp.network.response.User
 import kotlinx.coroutines.flow.MutableStateFlow

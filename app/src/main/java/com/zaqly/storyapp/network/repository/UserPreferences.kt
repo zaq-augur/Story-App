@@ -38,8 +38,6 @@ class UserPreferences(private val context: Context) {
         Log.d("UserPreferences", "Mengambil token: $savedToken")
         savedToken
     }
-
-    // Fungsi untuk menyimpan nama pengguna
     suspend fun saveUserName(name: String) {
         context.dataStore.edit { preferences ->
             preferences[USER_NAME_KEY] = name

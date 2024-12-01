@@ -2,7 +2,7 @@ package com.zaqly.storyapp.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.zaqly.storyapp.data.remote.repository.AuthRepository
+import com.zaqly.storyapp.network.repository.AuthRepository
 
 class LoginViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")

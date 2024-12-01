@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.zaqly.storyapp.data.remote.repository.AuthRepository
+import com.zaqly.storyapp.network.repository.AuthRepository
 import com.zaqly.storyapp.databinding.ActivityLoginBinding
 import com.zaqly.storyapp.network.api.ApiConfig
 import com.zaqly.storyapp.network.response.LoginResponse
@@ -70,16 +70,19 @@ class LoginActivity : AppCompatActivity() {
                 displayMessage("Format email tidak valid.")
             }
             else -> {
+                showProgressBar()
+
                 loginViewModel.performLogin(email, password)
             }
         }
     }
 
+
     private fun observeLoginState() {
         lifecycleScope.launchWhenStarted {
             loginViewModel.state.collect { loginResponse ->
                 Log.d("LoginState", "Received login response: $loginResponse")
-
+                hideProgressBar()
                 when {
                     loginResponse == null -> {
                         Log.d("LoginState", "Processing login")
@@ -96,6 +99,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun showProgressBar() {
+        viewBinding.progressBar.visibility = android.view.View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        viewBinding.progressBar.visibility = android.view.View.GONE
+    }
+
 
     private fun processLoginResult(response: LoginResponse) {
         if (response.error == false) {

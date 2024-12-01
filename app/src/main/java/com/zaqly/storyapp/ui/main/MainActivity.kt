@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.zaqly.storyapp.R
 import com.zaqly.storyapp.databinding.ActivityMainBinding
 import com.zaqly.storyapp.network.repository.UserPreferences
 import com.zaqly.storyapp.ui.adapter.AdapterActivity
@@ -28,8 +24,6 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
-
     private val storyViewModel: StoryViewModel by viewModels {
         StoryViewModelFactory(this)
     }
@@ -52,24 +46,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    override  fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        lifecycleScope.launch {
-            val userPreferences = UserPreferences.getInstance(this@MainActivity)
-            val token = userPreferences.token.firstOrNull()
-            if (token.isNullOrEmpty()) {
-                Log.d("MainActivity", "Token tidak ditemukan. Arahkan ke Login.")
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-
-
+        checkLoginStatus()
         setupRecyclerView()
         observeViewModel()
         storyViewModel.fetchStories()
@@ -82,8 +63,25 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddStoryActivity::class.java)
             startActivity(intent)
         }
-
     }
+
+    private fun checkLoginStatus() {
+        lifecycleScope.launch {
+            val userPreferences = UserPreferences.getInstance(this@MainActivity)
+            val token = userPreferences.token.firstOrNull()
+            if (token.isNullOrEmpty()) {
+                Log.d("MainActivity", "Token tidak ditemukan. Arahkan ke Login.")
+                navigateToLogin()
+            }
+        }
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun setupRecyclerView() {
         binding.rvListStory.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -92,9 +90,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-
         storyViewModel.stories.observe(this) { stories ->
-            storyAdapter.setStories(stories) //
+            storyAdapter.setStories(stories)
         }
 
         storyViewModel.isLoading.observe(this) { isLoading ->
@@ -103,11 +100,10 @@ class MainActivity : AppCompatActivity() {
 
         storyViewModel.errorMessage.observe(this) { errorMessage ->
             errorMessage?.let {
-                showToast(it) // Tampilkan pesan error jika ada
+                showToast(it)
             }
         }
     }
-
 
     private fun logout() {
         lifecycleScope.launch {
@@ -116,14 +112,10 @@ class MainActivity : AppCompatActivity() {
             userPreferences.clearUserName()
             Log.d("MainActivity", "Token dan nama pengguna berhasil dihapus")
 
-            Toast.makeText(this@MainActivity, "Logout berhasil", Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            Toast.makeText(this@MainActivity, "Sampai Jumpa lagi", Toast.LENGTH_SHORT).show()
+            navigateToLogin()
         }
     }
-
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

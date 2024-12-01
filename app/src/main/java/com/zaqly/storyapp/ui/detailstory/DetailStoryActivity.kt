@@ -37,7 +37,6 @@ class DetailStoryActivity : AppCompatActivity() {
         val description = intent.getStringExtra("STORY_DESCRIPTION")
         val photoUrl = intent.getStringExtra("STORY_PHOTO")
 
-        // Menampilkan data ke elemen UI
         binding.tvDetailName.text = name ?: "Nama tidak tersedia"
         binding.tvDescription.text = description ?: "Deskripsi tidak tersedia"
         loadImage(photoUrl)

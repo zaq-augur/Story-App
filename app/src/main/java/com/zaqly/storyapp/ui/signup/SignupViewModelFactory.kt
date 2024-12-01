@@ -2,7 +2,7 @@ package com.zaqly.storyapp.ui.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.zaqly.storyapp.data.remote.repository.AuthRepository
+import com.zaqly.storyapp.network.repository.AuthRepository
 
 class SignupViewModelFactory(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -55,7 +55,7 @@ class StoryRepository (
             val token = userPreferences.token.firstOrNull()
                 ?: return Result.failure(Exception("Token tidak ditemukan"))
 
-            Log.d("Token", "Token: $token") // Debug token
+            Log.d("Token", "Token: $token")
 
             val response = api.uploadStory(photo, description)
             if (response.error) {
@@ -64,7 +64,7 @@ class StoryRepository (
                 Result.success(response)
             }
         } catch (e: Exception) {
-            Log.e("UploadStoryError", "Error: ${e.localizedMessage}") // Debug error
+            Log.e("UploadStoryError", "Error: ${e.localizedMessage}")
             Result.failure(Exception("Gagal mengunggah: ${e.localizedMessage}", e))
         }
     }

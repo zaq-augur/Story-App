@@ -1,4 +1,4 @@
-package com.zaqly.storyapp.data.remote.repository
+package com.zaqly.storyapp.network.repository
 
 import com.zaqly.storyapp.network.api.ApiService
 import com.zaqly.storyapp.network.response.LoginResponse
